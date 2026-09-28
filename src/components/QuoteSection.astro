@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '@/components/Icon.astro';
+import QuoteForm from '@/components/QuoteForm.astro';
+import entry from '@/assets/gen/cta-entryway.jpg';
+import { company } from '@/data/business';
+
+export interface Props {
+  service?: string;
+  heading?: string;
+}
+const { service, heading = 'Ready for a cleaner home?' } = Astro.props;
+---
+
+<section class="qs" id="quote">
+  <Image class="qs-img" src={entry} alt="" widths={[768, 1280, 1920, 2560]} sizes="100vw" />
+  <div class="wrap qs-in">
+    <div class="qs-card" data-reveal>
+      <h2>{heading}</h2>
+      <p class="muted qs-sub">
+        Tell us a little about your space. Prefer to talk? Call or text
+        <a href={`tel:${company.phoneRaw}`} data-track="call-quote"><Icon name="phone" /> {company.phone}</a>
+      </p>
+      <QuoteForm service={service} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .qs { position: relative; isolation: isolate; padding-block: clamp(3rem, 8vw, 6.5rem); overflow: hidden; }
+  .qs :global(.qs-img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; z-index: -1; }
+  .qs-card {
+    width: min(100%, 600px);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border-radius: var(--r-card);
+    background: rgb(255 255 255 / 0.96);
+    box-shadow: 0 30px 80px -30px rgb(11 30 69 / 0.45);
+    display: grid;
+    gap: 0.9rem;
+  }
+  .qs-sub a { display: inline-flex; align-items: center; gap: 0.3rem; font-weight: 800; color: var(--pink-ink); text-decoration: none; white-space: nowrap; }
+  .qs-sub a :global(svg) { width: 16px; height: 16px; }
+  .qs-sub { margin-bottom: 0.6rem; }
+
+  @media (max-width: 700px) {
+    .qs { padding-top: 240px; }
+    .qs :global(.qs-img) { height: 320px; object-position: 80% 50%; }
+    .qs-card { box-shadow: var(--shadow-md); }
+  }
+</style>

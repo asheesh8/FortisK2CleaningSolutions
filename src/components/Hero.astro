@@ -1,0 +1,157 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '@/components/Icon.astro';
+import bg from '@/assets/gen/hero-vermont.jpg';
+import photo from '@/assets/img/hero-sunroom.jpg';
+import logo from '@/assets/brand/logo-light.png';
+import { company, cta } from '@/data/business';
+---
+
+<section class="hero">
+  <Image
+    class="hero-bg"
+    src={bg}
+    alt=""
+    widths={[640, 960, 1280, 1920, 2560, 3168]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+  />
+
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <Image class="hero-logo" src={logo} alt={company.name} widths={[300, 600]} sizes="300px" loading="eager" />
+      <h1>
+        <span class="l">Done carefully.</span>
+        <span class="l">Done completely.</span>
+        <span class="l l-k">Done K<sup>2</sup>.</span>
+      </h1>
+      <p class="lede">
+        Family-owned, fully insured house cleaning for Brattleboro and Southern Vermont. Recurring, deep, move-out and Airbnb turnovers.
+      </p>
+      <div class="hero-cta">
+        <a class="btn" href="/quote/">{cta.primary} <Icon name="arrow-right" class="arrow" /></a>
+        <a class="btn btn-ghost" href={`tel:${company.phoneRaw}`} data-track="call-hero"><Icon name="phone" />{company.phone}</a>
+      </div>
+    </div>
+
+    <div class="hero-media">
+      <div class="hero-frame">
+        <Image
+          src={photo}
+          alt="A sunroom with knotty pine walls and a freshly cleaned, gleaming tile floor"
+          widths={[420, 640, 900]}
+          sizes="(max-width: 900px) 80vw, 36vw"
+          loading="eager"
+        />
+      </div>
+      <img class="hero-shield" src="/icon-192.png" alt="" width="96" height="96" aria-hidden="true" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    min-height: min(calc(100dvh - 76px), 900px);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: #bcdcf1;
+  }
+  .hero :global(.hero-bg) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 100%;
+    z-index: -2;
+  }
+  /* Lifts the sky behind the words so they stay crisp over the treeline. */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(90deg, rgb(252 251 253 / 0.62) 0%, rgb(252 251 253 / 0.3) 42%, rgb(252 251 253 / 0) 62%),
+      linear-gradient(180deg, rgb(252 251 253 / 0.25) 0%, rgb(252 251 253 / 0) 55%);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+    padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .hero-copy { display: grid; gap: 1.3rem; justify-items: start; min-width: 0; }
+  .hero-copy :global(.hero-logo) { width: clamp(210px, 22vw, 290px); height: auto; filter: drop-shadow(0 6px 18px rgb(255 255 255 / 0.7)); }
+  h1 { font-size: clamp(2.6rem, 5vw, 4.5rem); font-variation-settings: 'wdth' 66; text-shadow: 0 2px 24px rgb(255 255 255 / 0.55); }
+  h1 .l { display: block; white-space: nowrap; }
+  h1 .l-k { color: var(--navy); }
+  h1 sup { font-size: 0.5em; vertical-align: 0.9em; line-height: 0; color: var(--pink-ink); margin-left: 0.02em; }
+  .lede { color: var(--ink); font-weight: 500; max-width: 42ch; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.3rem; }
+  .hero .btn-ghost { background: rgb(255 255 255 / 0.75); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .hero .btn-ghost:hover { background: var(--ink); }
+
+  .hero-media { position: relative; isolation: isolate; max-width: 460px; width: 100%; justify-self: end; }
+  .hero-media::before {
+    content: '';
+    position: absolute;
+    inset: 18px -18px -18px 18px;
+    border-radius: 200px 200px var(--r-card) var(--r-card);
+    background: var(--pink);
+    z-index: -1;
+  }
+  .hero-frame {
+    aspect-ratio: 4 / 4.9;
+    border-radius: 200px 200px var(--r-card) var(--r-card);
+    overflow: hidden;
+    border: 6px solid #fff;
+    background: var(--mist);
+    box-shadow: 0 30px 60px -30px rgb(11 30 69 / 0.55);
+  }
+  .hero-frame :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
+  .hero-shield {
+    position: absolute;
+    left: -34px;
+    bottom: 38px;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-copy > * { animation: rise 0.9s var(--ease) both; }
+    .hero-copy > :nth-child(2) { animation-delay: 0.06s; }
+    .hero-copy > :nth-child(3) { animation-delay: 0.14s; }
+    .hero-copy > :nth-child(4) { animation-delay: 0.2s; }
+    .hero-media { animation: rise 1s var(--ease) 0.15s both; }
+    .hero :global(.hero-bg) { animation: settle 1.6s var(--ease) both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+    @keyframes settle { from { transform: scale(1.06); } }
+  }
+
+  @media (max-width: 900px) {
+    .hero { align-items: flex-start; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-media { justify-self: center; max-width: 340px; margin-right: 18px; }
+    .hero-frame { aspect-ratio: 4 / 4.2; }
+    .hero-media::before { inset: 12px -12px -12px 12px; }
+    .hero-shield { left: -14px; width: 72px; height: 72px; bottom: 20px; }
+    .hero::after { background: linear-gradient(180deg, rgb(252 251 253 / 0.7) 0%, rgb(252 251 253 / 0.35) 45%, rgb(252 251 253 / 0) 65%); }
+  }
+  @media (max-width: 560px) {
+    h1 { font-size: clamp(2rem, 9.6vw, 2.9rem); }
+    .hero-copy :global(.hero-logo) { display: none; }
+    .hero-cta { width: 100%; }
+    .hero-cta .btn { width: 100%; }
+  }
+</style>

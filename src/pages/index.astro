@@ -1,0 +1,36 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import TrustRow from '@/components/TrustRow.astro';
+import ServiceBento from '@/components/ServiceBento.astro';
+import BeforeAfter from '@/components/BeforeAfter.astro';
+import JobNotes from '@/components/JobNotes.astro';
+import Process from '@/components/Process.astro';
+import Owners from '@/components/Owners.astro';
+import AreaBand from '@/components/AreaBand.astro';
+import Faq from '@/components/Faq.astro';
+import QuoteSection from '@/components/QuoteSection.astro';
+import { company, faqs } from '@/data/business';
+
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+
+<Base
+  title={`House Cleaning in Brattleboro, VT | ${company.name}`}
+  description={company.shortDescription}
+  schema={[faqSchema]}
+>
+  <Hero />
+  <TrustRow />
+  <ServiceBento />
+  <BeforeAfter />
+  <JobNotes />
+  <Process />
+  <Owners />
+  <AreaBand />
+  <Faq items={faqs} />
+  <QuoteSection />
+</Base>

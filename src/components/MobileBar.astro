@@ -1,0 +1,32 @@
+---
+import Icon from '@/components/Icon.astro';
+import { company, cta } from '@/data/business';
+---
+
+<div class="mbar" aria-label="Quick contact">
+  <a href={`tel:${company.phoneRaw}`} class="mbar-call" data-track="call-mobilebar"><Icon name="phone" />Call</a>
+  <a href="/quote/" class="mbar-quote">{cta.primary}</a>
+</div>
+
+<style>
+  .mbar { display: none; }
+  @media (max-width: 560px) {
+    .mbar {
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: 45;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem calc(0.6rem + env(safe-area-inset-bottom));
+      background: rgb(252 251 253 / 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--line);
+    }
+    .mbar a { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; min-height: 50px; border-radius: var(--r-pill); font-weight: 800; text-decoration: none; }
+    .mbar :global(svg) { width: 18px; height: 18px; }
+    .mbar-call { border: 2px solid var(--ink); color: var(--ink); }
+    .mbar-quote { background: var(--pink); color: var(--ink); }
+  }
+</style>

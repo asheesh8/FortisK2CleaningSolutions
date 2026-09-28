@@ -1,0 +1,132 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '@/components/Icon.astro';
+import logo from '@/assets/brand/logo-light.png';
+import { company, cta } from '@/data/business';
+
+const nav = [
+  { label: 'Services', href: '/#services' },
+  { label: 'Our work', href: '/#work' },
+  { label: 'About', href: '/about/' },
+  { label: 'FAQ', href: '/#faq' },
+];
+---
+
+<header class="hdr" data-hdr>
+  <div class="hdr-in wrap">
+    <a href="/" class="hdr-logo" aria-label={`${company.name}, home`}>
+      <Image src={logo} alt="" widths={[180, 360]} sizes="180px" loading="eager" fetchpriority="high" />
+    </a>
+
+    <nav class="hdr-nav" aria-label="Main">
+      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+    </nav>
+
+    <div class="hdr-actions">
+      <a class="hdr-tel" href={`tel:${company.phoneRaw}`} data-track="call-header">
+        <Icon name="phone" />
+        <span>{company.phone}</span>
+      </a>
+      <a class="btn btn-sm hdr-cta" href="/quote/">{cta.primary}</a>
+      <button class="hdr-burger" type="button" aria-expanded="false" aria-controls="mnav" data-burger>
+        <span class="sr-only">Menu</span>
+        <Icon name="list" class="i-open" />
+        <Icon name="x" class="i-close" />
+      </button>
+    </div>
+  </div>
+
+  <nav id="mnav" class="mnav" aria-label="Mobile" hidden data-mnav>
+    <div class="wrap">
+      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      <a href="/quote/" class="btn btn-block">{cta.primary}</a>
+      <a href={`tel:${company.phoneRaw}`} class="btn btn-ghost btn-block">{cta.call}</a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgb(252 251 253 / 0.86);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .hdr.scrolled { border-bottom-color: var(--line); box-shadow: 0 6px 24px -18px rgb(11 30 69 / 0.4); }
+  .hdr-in { display: flex; align-items: center; gap: 1.5rem; height: 76px; }
+  .hdr-logo { flex: none; }
+  .hdr-logo img { width: 168px; height: auto; }
+
+  .hdr-nav { display: flex; gap: 0.25rem; margin-left: auto; }
+  .hdr-nav a {
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--r-pill);
+    font-weight: 650;
+    font-size: 0.98rem;
+    text-decoration: none;
+    color: var(--ink-2);
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .hdr-nav a:hover { background: var(--blush); color: var(--ink); }
+
+  .hdr-actions { display: flex; align-items: center; gap: 0.9rem; }
+  .hdr-tel { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 800; text-decoration: none; color: var(--ink); white-space: nowrap; }
+  .hdr-tel :global(svg) { width: 18px; height: 18px; color: var(--pink-ink); }
+  .hdr-tel:hover span { text-decoration: underline; text-underline-offset: 4px; }
+
+  .hdr-burger { display: none; width: 46px; height: 46px; border: 2px solid var(--line); border-radius: var(--r-pill); background: #fff; align-items: center; justify-content: center; }
+  .hdr-burger :global(svg) { width: 22px; height: 22px; }
+  .hdr-burger :global(.i-close) { display: none; }
+  .hdr-burger[aria-expanded='true'] :global(.i-open) { display: none; }
+  .hdr-burger[aria-expanded='true'] :global(.i-close) { display: block; }
+
+  .mnav { border-top: 1px solid var(--line); background: var(--paper); padding-block: 0.75rem 1.25rem; }
+  .mnav .wrap { display: grid; gap: 0.35rem; }
+  .mnav a:not(.btn) { padding: 0.8rem 0.25rem; font-weight: 750; font-size: 1.15rem; text-decoration: none; border-bottom: 1px solid var(--line); }
+  .mnav .btn { margin-top: 0.6rem; }
+
+  @media (max-width: 1060px) {
+    .hdr-tel span { display: none; }
+    .hdr-tel { width: 44px; height: 44px; justify-content: center; border-radius: var(--r-pill); background: var(--blush); }
+  }
+  @media (max-width: 900px) {
+    .hdr-nav { display: none; }
+    .hdr-actions { margin-left: auto; }
+    .hdr-burger { display: inline-flex; }
+  }
+  @media (max-width: 560px) {
+    .hdr-in { height: 66px; gap: 0.75rem; }
+    .hdr-logo img { width: 138px; }
+    .hdr-cta, .hdr-tel { display: none; }
+  }
+</style>
+
+<script>
+  const hdr = document.querySelector<HTMLElement>('[data-hdr]');
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+  const menu = document.querySelector<HTMLElement>('[data-mnav]');
+
+  // A sentinel at the top of the page instead of a scroll listener.
+  if (hdr) {
+    const s = document.createElement('div');
+    s.style.cssText = 'position:absolute;top:0;height:8px;width:1px;pointer-events:none';
+    document.body.prepend(s);
+    new IntersectionObserver(([e]) => hdr.classList.toggle('scrolled', !e.isIntersecting)).observe(s);
+  }
+
+  burger?.addEventListener('click', () => {
+    const open = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!open));
+    if (menu) menu.hidden = open;
+  });
+  menu?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) {
+      burger?.setAttribute('aria-expanded', 'false');
+      menu.hidden = true;
+    }
+  });
+</script>

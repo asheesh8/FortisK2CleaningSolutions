@@ -1,0 +1,22 @@
+{
+  "name": "fortis-k2-cleaning",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0 --port 4521",
+    "build": "astro build",
+    "preview": "astro preview --port 4522",
+    "astro": "astro"
+  },
+  "engines": {
+    "node": ">=20.3.0"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@phosphor-icons/core": "^2.1.1",
+    "astro": "^5.18.2",
+    "sharp": "^0.35.5"
+  }
+}

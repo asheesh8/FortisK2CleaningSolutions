@@ -1,0 +1,24 @@
+---
+import Base from '@/layouts/Base.astro';
+import { company, cta } from '@/data/business';
+---
+
+<Base title={`Page Not Found | ${company.name}`} description="That page could not be found." noindex>
+  <section class="section nf">
+    <div class="wrap nf-in">
+      <h1>We missed a spot.</h1>
+      <p class="lede">That page is not here. Let's get you back somewhere clean.</p>
+      <div class="nf-cta">
+        <a class="btn" href="/quote/">{cta.primary}</a>
+        <a class="btn btn-ghost" href="/">Back to home</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { min-height: 60vh; display: grid; align-items: center; }
+  .nf-in { display: grid; justify-items: center; text-align: center; gap: 1.2rem; }
+  .nf-in .lede { margin-inline: auto; }
+  .nf-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+</style>

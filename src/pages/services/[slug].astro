@@ -1,0 +1,111 @@
+---
+import { Image } from 'astro:assets';
+import Base from '@/layouts/Base.astro';
+import Icon from '@/components/Icon.astro';
+import Process from '@/components/Process.astro';
+import ServiceBento from '@/components/ServiceBento.astro';
+import Faq from '@/components/Faq.astro';
+import QuoteSection from '@/components/QuoteSection.astro';
+import { services, faqs, company, cta, type Service } from '@/data/business';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { service: s } }));
+}
+
+const { service } = Astro.props as { service: Service };
+const pageFaqs = faqs.slice(0, 4);
+
+const serviceSchema = {
+  '@type': 'Service',
+  name: service.name,
+  description: service.intro,
+  serviceType: service.name,
+  provider: { '@id': `${company.url}/#business` },
+  areaServed: [
+    { '@type': 'City', name: 'Brattleboro, VT' },
+    { '@type': 'AdministrativeArea', name: 'Windham County, VT' },
+  ],
+};
+---
+
+<Base
+  title={`${service.metaTitle} | ${company.shortName}`}
+  description={service.metaDescription}
+  schema={[serviceSchema]}
+  breadcrumbs={[{ name: service.name, href: `/services/${service.slug}/` }]}
+>
+  <section class="sh">
+    <div class="wrap sh-grid">
+      <div class="sh-copy">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/#services">Services</a></nav>
+        <h1>{service.name}</h1>
+        <p class="lede">{service.intro}</p>
+        <div class="sh-cta">
+          <a class="btn" href={`/quote/?service=${service.slug}`}>{cta.primary} <Icon name="arrow-right" class="arrow" /></a>
+          <a class="btn btn-ghost" href={`tel:${company.phoneRaw}`}><Icon name="phone" />{company.phone}</a>
+        </div>
+      </div>
+      <div class="sh-media">
+        <Image src={service.image} alt={service.imageAlt} widths={[480, 800, 1200]} sizes="(max-width: 900px) 92vw, 46vw" loading="eager" fetchpriority="high" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section sd">
+    <div class="wrap sd-grid">
+      <div class="sd-card" data-reveal>
+        <h2>What is included</h2>
+        <ul class="ticks">
+          {service.includes.map((i) => <li><Icon name="check-circle" />{i}</li>)}
+        </ul>
+        <p class="muted sd-note">Every home is different. We confirm the exact scope at your walk-through.</p>
+      </div>
+      <div class="sd-side" data-reveal style="--i:1">
+        <h2>Good for</h2>
+        <ul class="pills">
+          {service.goodFor.map((g) => <li>{g}</li>)}
+        </ul>
+        <p class="muted">Family-owned, fully insured, and based in {company.county}.</p>
+      </div>
+    </div>
+  </section>
+
+  <Process />
+  <ServiceBento heading="More ways we can help." exclude={service.slug} />
+  <Faq items={pageFaqs} />
+  <QuoteSection service={service.slug} heading={`Get a quote for ${service.short.toLowerCase()}.`} />
+</Base>
+
+<style>
+  .sh { padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem); background: radial-gradient(60% 70% at 100% 0%, var(--blush) 0%, transparent 70%); }
+  .sh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .sh-copy { display: grid; gap: 1.25rem; justify-items: start; min-width: 0; }
+  .sh-copy h1 { font-size: clamp(2.4rem, 5vw, 4.2rem); font-variation-settings: 'wdth' 70; }
+  .crumbs { font-size: 0.9rem; color: var(--ink-3); font-weight: 600; }
+  .crumbs a { color: var(--ink-3); text-decoration: none; }
+  .crumbs a:hover { color: var(--pink-ink); text-decoration: underline; }
+  .sh-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .sh-media { position: relative; isolation: isolate; }
+  .sh-media::before { content: ''; position: absolute; inset: 16px -16px -16px 16px; border-radius: var(--r-card); background: var(--pink); z-index: -1; }
+  .sh-media :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r-card); box-shadow: var(--shadow-md); }
+
+  .sd { background: var(--mist); }
+  .sd-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 1.25rem; align-items: start; }
+  .sd-card, .sd-side { background: var(--card); border-radius: var(--r-card); padding: clamp(1.5rem, 4vw, 2.5rem); box-shadow: var(--shadow-sm); display: grid; gap: 1.1rem; align-content: start; }
+  .sd h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+  .ticks { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem 1.5rem; }
+  .ticks li { display: flex; gap: 0.6rem; align-items: flex-start; font-weight: 600; }
+  .ticks :global(svg) { width: 22px; height: 22px; color: var(--pink-ink); margin-top: 0.1rem; }
+  .sd-note { font-size: 0.95rem; }
+  .pills { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pills li { padding: 0.5rem 0.95rem; border-radius: var(--r-pill); background: var(--blush); font-weight: 700; font-size: 0.95rem; }
+
+  @media (max-width: 900px) {
+    .sh-grid, .sd-grid { grid-template-columns: 1fr; }
+    .sh-media { margin-right: 16px; }
+  }
+  @media (max-width: 560px) {
+    .ticks { grid-template-columns: 1fr; }
+    .sh-cta .btn { width: 100%; }
+  }
+</style>

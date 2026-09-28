@@ -1,0 +1,33 @@
+---
+import Base from '@/layouts/Base.astro';
+import { company } from '@/data/business';
+---
+
+<Base title={`Privacy Policy | ${company.name}`} description={`How ${company.name} handles the information you send us.`}>
+  <section class="section pv">
+    <div class="wrap pv-in">
+      <h1>Privacy policy</h1>
+      <p class="muted">Last updated September 28, 2026</p>
+
+      <h2>What we collect</h2>
+      <p>When you request a quote we receive the details you type into the form: your name, phone number, and optionally your email, town, the service you need and notes about your space. We do not ask for payment details on this website.</p>
+
+      <h2>How we use it</h2>
+      <p>We use your details only to contact you about your cleaning request, schedule a walk-through, and provide our services. We do not sell or rent your information.</p>
+
+      <h2>Who else sees it</h2>
+      <p>Form submissions pass through the service that delivers them to our inbox. Our website host may keep standard server logs. We use these services only to deliver your message and run this website.</p>
+
+      <h2>Your choices</h2>
+      <p>Ask us at any time to see, correct or delete the information you sent us: email <a href={`mailto:${company.email}`}>{company.email}</a> or call <a href={`tel:${company.phoneRaw}`}>{company.phone}</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pv-in { max-width: 720px; display: grid; gap: 1rem; }
+  .pv-in h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); }
+  .pv-in h2 { font-size: 1.5rem; margin-top: 1rem; }
+  .pv-in p { color: var(--ink-2); }
+  .pv-in a { color: var(--pink-ink); font-weight: 700; }
+</style>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.fortisk2cleaning.com/sitemap-index.xml

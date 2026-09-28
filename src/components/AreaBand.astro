@@ -1,0 +1,28 @@
+---
+import Icon from '@/components/Icon.astro';
+import { company } from '@/data/business';
+---
+
+<section class="area" aria-labelledby="area-h">
+  <div class="wrap area-in" data-reveal>
+    <img class="area-shield" src="/icon-192.png" alt="" width="84" height="84" />
+    <h2 id="area-h">Rooted in {company.county}.</h2>
+    <p class="lede">Cleaning homes, rentals and small businesses in Brattleboro and across Southern Vermont. Not sure we reach you? Just ask.</p>
+    <a class="text-link" href={company.facebook} rel="noopener" target="_blank">
+      <Icon name="facebook-logo" /> Message us on Facebook
+    </a>
+  </div>
+</section>
+
+<style>
+  .area {
+    padding-block: clamp(4rem, 8vw, 6.5rem);
+    background:
+      radial-gradient(50% 80% at 50% 0%, var(--blush-2) 0%, transparent 70%),
+      var(--blush);
+  }
+  .area-in { display: grid; justify-items: center; text-align: center; gap: 1.1rem; }
+  .area-shield { width: 84px; height: 84px; border-radius: 50%; background: #fff; box-shadow: var(--shadow-md); }
+  .area-in h2 { max-width: 18ch; }
+  .area-in .lede { margin-inline: auto; }
+</style>

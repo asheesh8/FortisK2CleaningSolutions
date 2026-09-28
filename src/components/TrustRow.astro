@@ -1,0 +1,40 @@
+---
+import Icon from '@/components/Icon.astro';
+import { whyUs } from '@/data/business';
+---
+
+<section class="trust" aria-label="Why homeowners choose Fortis K²">
+  <ul class="wrap trust-row">
+    {whyUs.map((w, i) => (
+      <li data-reveal style={`--i:${i}`}>
+        <span class="trust-ic"><Icon name={w.icon} /></span>
+        <span>
+          <strong>{w.title}</strong>
+          <span class="muted">{w.body}</span>
+        </span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .trust { border-block: 1px solid var(--line); background: var(--card); }
+  .trust-row { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .trust-row li { display: flex; gap: 0.9rem; align-items: flex-start; padding: 1.6rem 1.25rem; }
+  .trust-row li + li { border-left: 1px solid var(--line); }
+  .trust-row strong { display: block; font-size: 1.06rem; font-weight: 800; line-height: 1.2; margin-bottom: 0.2rem; }
+  .trust-row .muted { font-size: 0.94rem; line-height: 1.45; display: block; }
+  .trust-ic { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--blush); color: var(--pink-ink); }
+  .trust-ic :global(svg) { width: 22px; height: 22px; }
+
+  @media (max-width: 960px) {
+    .trust-row { grid-template-columns: 1fr 1fr; }
+    .trust-row li:nth-child(3) { border-left: 0; }
+    .trust-row li:nth-child(n + 3) { border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 560px) {
+    .trust-row { grid-template-columns: 1fr; }
+    .trust-row li + li { border-left: 0; border-top: 1px solid var(--line); }
+    .trust-row li { padding: 1.1rem 0.25rem; }
+  }
+</style>

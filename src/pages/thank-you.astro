@@ -1,0 +1,27 @@
+---
+import Base from '@/layouts/Base.astro';
+import Icon from '@/components/Icon.astro';
+import { company } from '@/data/business';
+---
+
+<Base title={`Thank You | ${company.name}`} description="Your quote request was received." noindex>
+  <section class="section ty">
+    <div class="wrap ty-in">
+      <span class="ty-ic"><Icon name="check-circle" /></span>
+      <h1>Thank you!</h1>
+      <p class="lede">We got your request and will reach out soon to set up your walk-through. Need us sooner? Call or text <a href={`tel:${company.phoneRaw}`}>{company.phone}</a>.</p>
+      <p class="ty-tag">{company.tagline}</p>
+      <a class="btn btn-ghost" href="/">Back to home</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ty { min-height: 60vh; display: grid; align-items: center; }
+  .ty-in { display: grid; justify-items: center; text-align: center; gap: 1.2rem; }
+  .ty-in .lede { margin-inline: auto; }
+  .ty-in .lede a { color: var(--pink-ink); font-weight: 800; }
+  .ty-ic { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; background: var(--pink); color: var(--ink); }
+  .ty-ic :global(svg) { width: 42px; height: 42px; }
+  .ty-tag { font-weight: 800; color: var(--navy); }
+</style>

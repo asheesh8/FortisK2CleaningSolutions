@@ -1,0 +1,88 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '@/components/Icon.astro';
+import logo from '@/assets/brand/logo-reverse.png';
+import { company, services, cta } from '@/data/business';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="ftr">
+  <div class="wrap ftr-top">
+    <div class="ftr-brand">
+      <Image src={logo} alt={company.name} widths={[240, 480]} sizes="240px" />
+      <p>Family-owned and fully insured. Proudly cleaning homes and businesses in {company.serviceAreaSummary}.</p>
+      <a class="btn" href="/quote/">{cta.primary} <Icon name="arrow-right" class="arrow" /></a>
+    </div>
+
+    <div class="ftr-col">
+      <h2>Services</h2>
+      <ul>
+        {services.map((s) => <li><a href={`/services/${s.slug}/`}>{s.short}</a></li>)}
+      </ul>
+    </div>
+
+    <div class="ftr-col">
+      <h2>Company</h2>
+      <ul>
+        <li><a href="/about/">About us</a></li>
+        <li><a href="/#work">Our work</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="/quote/">{cta.primary}</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+      </ul>
+    </div>
+
+    <div class="ftr-col">
+      <h2>Contact</h2>
+      <ul class="ftr-contact">
+        <li><a href={`tel:${company.phoneRaw}`} data-track="call-footer"><Icon name="phone" />{company.phone}</a></li>
+        <li><a href={`mailto:${company.email}`}><Icon name="envelope-simple" /><span class="ftr-mail">{company.email}</span></a></li>
+        <li><a href={company.facebook} rel="noopener" target="_blank"><Icon name="facebook-logo" />Message us on Facebook</a></li>
+        <li><span><Icon name="map-pin" />{company.county}, Vermont</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ftr-word wrap" aria-hidden="true">Done K²</div>
+
+  <div class="wrap ftr-base">
+    <p>&copy; {year} {company.name}. {company.tagline}</p>
+    <p>Website by <a href="https://github.com/asheesh8" rel="noopener">ArkiTech Solutions</a></p>
+  </div>
+</footer>
+
+<style>
+  .ftr { background: var(--ink); color: #d9def0; padding-top: clamp(3.5rem, 7vw, 5.5rem); overflow: hidden; }
+  .ftr a { text-decoration: none; }
+  .ftr-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.3fr; gap: 2.5rem; }
+  .ftr-brand img { width: 240px; margin-bottom: 1.25rem; }
+  .ftr-brand p { max-width: 36ch; margin-bottom: 1.5rem; color: #c3cbe2; }
+  .ftr-col h2 { font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pink); margin-bottom: 1rem; font-variation-settings: 'wdth' 100; }
+  .ftr-col ul { list-style: none; padding: 0; display: grid; gap: 0.6rem; }
+  .ftr-col a, .ftr-col span { color: #e7eaf5; font-weight: 550; }
+  .ftr-col a:hover { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+  .ftr-contact a, .ftr-contact span { display: inline-flex; align-items: center; gap: 0.55rem; }
+  .ftr-contact :global(svg) { width: 18px; height: 18px; color: var(--pink); flex: none; }
+  .ftr-mail { word-break: break-all; }
+
+  .ftr-word {
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    font-variation-settings: 'wdth' 62;
+    font-size: clamp(5rem, 22vw, 19rem);
+    line-height: 0.8;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgb(247 88 148 / 0.55);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .ftr-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; padding-block: 1.5rem 2rem; margin-top: 1.5rem; border-top: 1px solid rgb(255 255 255 / 0.12); font-size: 0.9rem; color: #a9b2cc; }
+  .ftr-base a { color: #d9def0; text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 960px) { .ftr-top { grid-template-columns: 1fr 1fr; } .ftr-brand { grid-column: 1 / -1; } }
+  @media (max-width: 560px) { .ftr-top { grid-template-columns: 1fr; } .ftr { padding-bottom: 72px; } }
+</style>

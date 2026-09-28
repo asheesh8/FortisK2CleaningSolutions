@@ -1,0 +1,29 @@
+---
+/**
+ * Phosphor icons (bold weight), inlined at build time from @phosphor-icons/core.
+ * Add a name to the glob below before using it.
+ */
+export interface Props {
+  name: string;
+  class?: string;
+  size?: number;
+  label?: string;
+}
+const { name, class: cls, size, label } = Astro.props;
+
+const icons = import.meta.glob(
+  '/node_modules/@phosphor-icons/core/assets/bold/{users-three,shield-check,clipboard-text,calendar-check,phone,envelope-simple,arrow-right,arrow-up-right,facebook-logo,map-pin,list,x,plus,check-circle,chat-circle-text,sparkle,house,caret-left,caret-right,arrows-left-right}-bold.svg',
+  { query: '?raw', import: 'default', eager: true },
+) as Record<string, string>;
+
+const raw = icons[`/node_modules/@phosphor-icons/core/assets/bold/${name}-bold.svg`];
+if (!raw) throw new Error(`Icon "${name}" is not in the Icon.astro glob.`);
+
+const attrs = [
+  `class="icon${cls ? ' ' + cls : ''}"`,
+  size ? `width="${size}" height="${size}"` : '',
+  label ? `role="img" aria-label="${label}"` : 'aria-hidden="true" focusable="false"',
+].join(' ');
+const svg = raw.replace('<svg ', `<svg ${attrs} `);
+---
+<Fragment set:html={svg} />

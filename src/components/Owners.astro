@@ -1,0 +1,79 @@
+---
+import Icon from '@/components/Icon.astro';
+import { owners, story } from '@/data/business';
+
+export interface Props {
+  /** Show the "read our story" link (hidden on the About page itself). */
+  link?: boolean;
+}
+const { link = true } = Astro.props;
+---
+
+<section class="section own">
+  <div class="wrap own-grid">
+    <div class="own-copy" data-reveal>
+      <p class="eyebrow">The women behind the clean</p>
+      <h2>Three women.<br />One family.<br /><span class="pink">One shared vision.</span></h2>
+      <p class="lede">{story}</p>
+      {link && <a class="text-link" href="/about/">Read our story <Icon name="arrow-right" /></a>}
+    </div>
+
+    <ul class="own-list">
+      {owners.map((o, i) => (
+        <li data-reveal style={`--i:${i + 1}`}>
+          {/* TODO(fortis): replace initials with real headshots when supplied. */}
+          <span class:list={['own-mono', i === 1 && 'alt']} aria-hidden="true">{o.initials}</span>
+          <div>
+            <h3>{o.name}</h3>
+            <p class="own-role">{o.role}</p>
+            <p class="muted">{o.bio}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .own { background: var(--mist); }
+  .own-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+  .own-copy { display: grid; gap: 1.3rem; justify-items: start; position: sticky; top: 110px; }
+
+  .own-list { list-style: none; padding: 0; display: grid; gap: 1rem; }
+  .own-list li {
+    display: grid;
+    grid-template-columns: 76px 1fr;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    border-radius: var(--r-card);
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+  }
+  .own-list li:nth-child(2) { margin-left: clamp(0rem, 4vw, 3rem); }
+  .own-mono {
+    display: grid;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: var(--pink);
+    color: var(--ink);
+    font-weight: 900;
+    font-size: 1.5rem;
+    font-variation-settings: 'wdth' 75;
+    letter-spacing: 0.02em;
+  }
+  .own-mono.alt { background: var(--ink); color: #fff; }
+  .own-list h3 { font-size: 1.35rem; }
+  .own-role { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pink-ink); margin: 0.2rem 0 0.5rem; }
+
+  @media (max-width: 900px) {
+    .own-grid { grid-template-columns: 1fr; }
+    .own-copy { position: static; }
+    .own-list li:nth-child(2) { margin-left: 0; }
+  }
+  @media (max-width: 480px) {
+    .own-list li { grid-template-columns: 1fr; padding: 1.25rem; }
+    .own-mono { width: 60px; height: 60px; font-size: 1.2rem; }
+  }
+</style>

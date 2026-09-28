@@ -1,0 +1,48 @@
+---
+import Base from '@/layouts/Base.astro';
+import Icon from '@/components/Icon.astro';
+import QuoteForm from '@/components/QuoteForm.astro';
+import { company, process } from '@/data/business';
+---
+
+<Base
+  title={`Request a Quote | ${company.name}`}
+  description="Request a cleaning quote from Fortis K² in Brattleboro and Southern Vermont. We start with a walk-through, then send a personal quote."
+  breadcrumbs={[{ name: 'Request a quote', href: '/quote/' }]}
+>
+  <section class="qp">
+    <div class="wrap qp-grid">
+      <div class="qp-copy">
+        <h1>Let's get your home on the schedule.</h1>
+        <p class="lede">Tell us about your space. We will reach out to set up a walk-through and send a personal quote.</p>
+        <ol class="qp-steps">
+          {process.map((p) => <li><strong>{p.title}</strong><span class="muted">{p.body}</span></li>)}
+        </ol>
+        <div class="qp-direct">
+          <a href={`tel:${company.phoneRaw}`}><Icon name="phone" />{company.phone}</a>
+          <a href={`mailto:${company.email}`}><Icon name="envelope-simple" />Email us</a>
+          <a href={company.facebook} rel="noopener" target="_blank"><Icon name="facebook-logo" />Facebook</a>
+        </div>
+      </div>
+      <div class="qp-card">
+        <QuoteForm id="quote-page-form" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .qp { padding-block: clamp(2.5rem, 6vw, 5rem); background: radial-gradient(60% 70% at 0% 0%, var(--blush) 0%, transparent 70%), radial-gradient(50% 60% at 100% 100%, var(--mist) 0%, transparent 70%); }
+  .qp-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+  .qp-copy { display: grid; gap: 1.4rem; min-width: 0; }
+  .qp-copy h1 { font-size: clamp(2.3rem, 4.6vw, 3.8rem); font-variation-settings: 'wdth' 70; }
+  .qp-steps { padding-left: 1.3rem; display: grid; gap: 0.8rem; }
+  .qp-steps li::marker { color: var(--pink-ink); font-weight: 800; }
+  .qp-steps strong { display: block; }
+  .qp-direct { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .qp-direct a { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.6rem 1rem; border-radius: var(--r-pill); background: var(--card); border: 2px solid var(--line); font-weight: 750; text-decoration: none; }
+  .qp-direct a:hover { border-color: var(--ink); }
+  .qp-direct :global(svg) { width: 18px; height: 18px; color: var(--pink-ink); }
+  .qp-card { padding: clamp(1.5rem, 4vw, 2.5rem); border-radius: var(--r-card); background: var(--card); box-shadow: 0 30px 80px -40px rgb(11 30 69 / 0.45); }
+  @media (max-width: 900px) { .qp-grid { grid-template-columns: 1fr; } }
+</style>
