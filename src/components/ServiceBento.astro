@@ -20,9 +20,9 @@ const isFull = list.length === 6;
       <p class="lede">One family-run team for regular upkeep, big resets, rentals and small businesses across Southern Vermont.</p>
     </div>
 
-    <ul class:list={['svc-grid', isFull && 'svc-grid-6', list.length === 5 && 'svc-grid-5']}>
+    <ul data-reveal class:list={['svc-grid', isFull && 'svc-grid-6', list.length === 5 && 'svc-grid-5']}>
       {list.map((s, i) => (
-        <li class={`svc-cell c${i + 1}`} data-reveal style={`--i:${i % 3}`}>
+        <li class={`svc-cell c${i + 1}`}>
           <a href={`/services/${s.slug}/`} class="svc-card">
             <Image
               src={s.image}
@@ -46,7 +46,7 @@ const isFull = list.length === 6;
   .svc-head { display: grid; gap: 1rem; max-width: 46rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
 
   .svc-grid { list-style: none; padding: 0; display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
-  .svc-grid-6 { grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(240px, auto); }
+  .svc-grid-6 { grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(215px, auto); }
   .svc-grid-6 .c1 { grid-column: 1 / 8; grid-row: 1 / 3; }
   .svc-grid-6 .c2 { grid-column: 8 / 13; }
   .svc-grid-6 .c3 { grid-column: 8 / 13; }
@@ -58,7 +58,7 @@ const isFull = list.length === 6;
   .svc-grid-5 .c1, .svc-grid-5 .c2 { grid-column: span 3; min-height: 320px; }
   .svc-grid-5 .c3, .svc-grid-5 .c4, .svc-grid-5 .c5 { grid-column: span 2; }
 
-  .svc-cell { min-height: 260px; }
+  .svc-cell { min-height: 230px; }
   .svc-card {
     position: relative;
     display: block;
@@ -116,8 +116,24 @@ const isFull = list.length === 6;
     .svc-grid-5 .svc-cell { grid-column: auto; }
     .svc-grid-5 .c1 { grid-column: 1 / -1; }
   }
-  @media (max-width: 600px) {
-    .svc-grid, .svc-grid-6, .svc-grid-5 { grid-template-columns: 1fr; }
-    .svc-grid-6 .svc-cell, .svc-cell { min-height: 280px; }
+  /* Phones: one swipeable row instead of six stacked cards. */
+  @media (max-width: 700px) {
+    .svc-grid, .svc-grid-6, .svc-grid-5 {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gutter);
+      margin-inline: calc(-1 * var(--gutter));
+      padding: 0.25rem var(--gutter) 0.75rem;
+      scrollbar-width: none;
+    }
+    .svc-grid::-webkit-scrollbar { display: none; }
+    .svc-grid .svc-cell, .svc-grid-6 .svc-cell, .svc-grid-6 .c1, .svc-grid-5 .svc-cell {
+      flex: 0 0 82%;
+      min-height: 330px;
+      scroll-snap-align: start;
+    }
+    .svc-head { margin-bottom: 1.5rem; }
   }
 </style>

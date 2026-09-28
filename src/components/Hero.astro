@@ -2,7 +2,8 @@
 import { Image } from 'astro:assets';
 import Icon from '@/components/Icon.astro';
 import bg from '@/assets/gen/hero-vermont.jpg';
-import photo from '@/assets/img/hero-sunroom.jpg';
+import before from '@/assets/img/tub-before.jpg';
+import after from '@/assets/img/tub-after.jpg';
 import logo from '@/assets/brand/logo-light.png';
 import { company, cta } from '@/data/business';
 ---
@@ -27,26 +28,29 @@ import { company, cta } from '@/data/business';
         <span class="l l-k">Done K<sup>2</sup>.</span>
       </h1>
       <p class="lede">
-        Family-owned, fully insured house cleaning for Brattleboro and Southern Vermont. Recurring, deep, move-out and Airbnb turnovers.
+        Family-owned, fully insured house cleaning for Brattleboro and Southern Vermont.
       </p>
       <div class="hero-cta">
         <a class="btn" href="/quote/">{cta.primary} <Icon name="arrow-right" class="arrow" /></a>
-        <a class="btn btn-ghost" href={`tel:${company.phoneRaw}`} data-track="call-hero"><Icon name="phone" />{company.phone}</a>
+        <a class="btn btn-ghost hero-call" href={`tel:${company.phoneRaw}`} data-track="call-hero"><Icon name="phone" />{company.phone}</a>
       </div>
     </div>
 
-    <div class="hero-media">
-      <div class="hero-frame">
-        <Image
-          src={photo}
-          alt="A sunroom with knotty pine walls and a freshly cleaned, gleaming tile floor"
-          widths={[420, 640, 900]}
-          sizes="(max-width: 900px) 80vw, 36vw"
-          loading="eager"
-        />
+    <figure class="hero-media">
+      <div class="arch" data-ba>
+        <Image class="arch-img" src={after} alt="A real Fortis K² job: the bathtub after cleaning, bright white" widths={[360, 546]} sizes="(max-width: 900px) 70vw, 420px" loading="eager" />
+        <div class="arch-before">
+          <Image class="arch-img" src={before} alt="The same bathtub before cleaning, stained yellow and brown" widths={[360, 546]} sizes="(max-width: 900px) 70vw, 420px" loading="eager" />
+        </div>
+        <span class="arch-line" aria-hidden="true"><span class="arch-knob"><Icon name="caret-left" /><Icon name="caret-right" /></span></span>
+        <input class="arch-range" type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after" data-ba-range />
       </div>
-      <img class="hero-shield" src="/icon-192.png" alt="" width="96" height="96" aria-hidden="true" />
-    </div>
+      <figcaption>
+        <span class="tag tag-b">Before</span>
+        <span><span class="cap-long">A real Fortis K² job. </span>Drag to compare.</span>
+        <span class="tag tag-a">After</span>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -54,7 +58,7 @@ import { company, cta } from '@/data/business';
   .hero {
     position: relative;
     isolation: isolate;
-    min-height: min(calc(100dvh - 76px), 900px);
+    min-height: min(calc(100dvh - 76px), 860px);
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -69,7 +73,6 @@ import { company, cta } from '@/data/business';
     object-position: 60% 100%;
     z-index: -2;
   }
-  /* Lifts the sky behind the words so they stay crisp over the treeline. */
   .hero::after {
     content: '';
     position: absolute;
@@ -82,51 +85,79 @@ import { company, cta } from '@/data/business';
 
   .hero-grid {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1.15fr 0.85fr;
     gap: clamp(2rem, 5vw, 4.5rem);
     align-items: center;
-    padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 6vw, 4.5rem);
+    padding-block: clamp(2rem, 4vw, 3rem) clamp(2.5rem, 5vw, 4rem);
   }
 
-  .hero-copy { display: grid; gap: 1.3rem; justify-items: start; min-width: 0; }
-  .hero-copy :global(.hero-logo) { width: clamp(210px, 22vw, 290px); height: auto; filter: drop-shadow(0 6px 18px rgb(255 255 255 / 0.7)); }
+  .hero-copy { display: grid; gap: 1.2rem; justify-items: start; min-width: 0; }
+  .hero-copy :global(.hero-logo) { width: clamp(210px, 21vw, 280px); height: auto; filter: drop-shadow(0 6px 18px rgb(255 255 255 / 0.7)); }
   h1 { font-size: clamp(2.6rem, 5vw, 4.5rem); font-variation-settings: 'wdth' 66; text-shadow: 0 2px 24px rgb(255 255 255 / 0.55); }
   h1 .l { display: block; white-space: nowrap; }
   h1 .l-k { color: var(--navy); }
   h1 sup { font-size: 0.5em; vertical-align: 0.9em; line-height: 0; color: var(--pink-ink); margin-left: 0.02em; }
-  .lede { color: var(--ink); font-weight: 500; max-width: 42ch; }
-  .hero-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.3rem; }
+  .lede { color: var(--ink); font-weight: 500; max-width: 38ch; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.2rem; }
   .hero .btn-ghost { background: rgb(255 255 255 / 0.75); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
   .hero .btn-ghost:hover { background: var(--ink); }
 
-  .hero-media { position: relative; isolation: isolate; max-width: 460px; width: 100%; justify-self: end; }
-  .hero-media::before {
-    content: '';
-    position: absolute;
-    inset: 18px -18px -18px 18px;
-    border-radius: 200px 200px var(--r-card) var(--r-card);
-    background: var(--pink);
-    z-index: -1;
-  }
-  .hero-frame {
-    aspect-ratio: 4 / 4.9;
-    border-radius: 200px 200px var(--r-card) var(--r-card);
-    overflow: hidden;
+  /* ---- arch before/after */
+  .hero-media { margin: 0; justify-self: end; width: 100%; max-width: 420px; display: grid; gap: 1.1rem; }
+  .arch {
+    --pos: 50%;
+    position: relative;
+    isolation: isolate;
+    aspect-ratio: 546 / 605;
+    border-radius: 999px 999px var(--r-card) var(--r-card);
     border: 6px solid #fff;
+    overflow: hidden;
     background: var(--mist);
-    box-shadow: 0 30px 60px -30px rgb(11 30 69 / 0.55);
+    box-shadow: 18px 18px 0 0 var(--pink), 0 30px 60px -30px rgb(11 30 69 / 0.6);
+    touch-action: pan-y;
+    user-select: none;
   }
-  .hero-frame :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
-  .hero-shield {
+  .arch :global(.arch-img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .arch-before { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+  .arch-line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 4px; translate: -50% 0; background: #fff; pointer-events: none; }
+  .arch-knob {
     position: absolute;
-    left: -34px;
-    bottom: 38px;
-    width: 96px;
-    height: 96px;
+    top: 58%;
+    left: 50%;
+    translate: -50% -50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: #fff;
+    color: var(--ink);
     box-shadow: var(--shadow-md);
   }
+  .arch-knob :global(svg) { width: 16px; height: 16px; margin-inline: -2px; }
+  .arch-range { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; margin: 0; cursor: ew-resize; }
+  .arch:focus-within { outline: 3px solid var(--pink-ink); outline-offset: 4px; }
+
+  figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.45rem;
+    border-radius: var(--r-pill);
+    background: rgb(255 255 255 / 0.9);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-sm);
+    font-size: 0.86rem;
+    font-weight: 650;
+    color: var(--ink-2);
+    text-align: center;
+  }
+  .tag { flex: none; padding: 0.3rem 0.75rem; border-radius: var(--r-pill); font-weight: 800; font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .tag-b { background: var(--ink); color: #fff; }
+  .tag-a { background: var(--pink); color: var(--ink); }
 
   @media (prefers-reduced-motion: no-preference) {
     .hero-copy > * { animation: rise 0.9s var(--ease) both; }
@@ -140,18 +171,34 @@ import { company, cta } from '@/data/business';
   }
 
   @media (max-width: 900px) {
-    .hero { align-items: flex-start; }
-    .hero-grid { grid-template-columns: 1fr; }
-    .hero-media { justify-self: center; max-width: 340px; margin-right: 18px; }
-    .hero-frame { aspect-ratio: 4 / 4.2; }
-    .hero-media::before { inset: 12px -12px -12px 12px; }
-    .hero-shield { left: -14px; width: 72px; height: 72px; bottom: 20px; }
-    .hero::after { background: linear-gradient(180deg, rgb(252 251 253 / 0.7) 0%, rgb(252 251 253 / 0.35) 45%, rgb(252 251 253 / 0) 65%); }
+    .hero { min-height: 0; align-items: flex-start; }
+    .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-media { justify-self: center; max-width: 320px; margin-right: 14px; }
+    .arch { box-shadow: 12px 12px 0 0 var(--pink), 0 24px 50px -30px rgb(11 30 69 / 0.6); }
+    .hero::after { background: linear-gradient(180deg, rgb(252 251 253 / 0.72) 0%, rgb(252 251 253 / 0.35) 40%, rgb(252 251 253 / 0) 60%); }
   }
   @media (max-width: 560px) {
-    h1 { font-size: clamp(2rem, 9.6vw, 2.9rem); }
+    .hero-grid { padding-block: 1.75rem 2.25rem; }
+    .hero-copy { gap: 1rem; }
     .hero-copy :global(.hero-logo) { display: none; }
+    h1 { font-size: clamp(2.1rem, 10vw, 2.9rem); }
+    .lede { font-size: 1.05rem; }
     .hero-cta { width: 100%; }
     .hero-cta .btn { width: 100%; }
+    /* The sticky bottom bar already carries Call. */
+    .hero-call { display: none; }
+    .hero-media { max-width: 270px; }
+    figcaption { font-size: 0.8rem; }
+    .cap-long { display: none; }
   }
 </style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ba]').forEach((stage) => {
+    const range = stage.querySelector<HTMLInputElement>('[data-ba-range]');
+    if (!range) return;
+    const set = () => stage.style.setProperty('--pos', `${range.value}%`);
+    range.addEventListener('input', set);
+    set();
+  });
+</script>

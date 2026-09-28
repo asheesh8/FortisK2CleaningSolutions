@@ -3,22 +3,36 @@ import { Image } from 'astro:assets';
 import Icon from '@/components/Icon.astro';
 import QuoteForm from '@/components/QuoteForm.astro';
 import entry from '@/assets/gen/cta-entryway.jpg';
-import { company } from '@/data/business';
+import { company, process } from '@/data/business';
 
 export interface Props {
   service?: string;
   heading?: string;
 }
 const { service, heading = 'Ready for a cleaner home?' } = Astro.props;
+const icons = ['chat-circle-text', 'house', 'clipboard-text', 'calendar-check'];
 ---
 
-<section class="qs" id="quote">
-  <Image class="qs-img" src={entry} alt="" widths={[768, 1280, 1920, 2560]} sizes="100vw" />
-  <div class="wrap qs-in">
-    <div class="qs-card" data-reveal>
+<section class="section qs" id="quote">
+  <div class="wrap qs-grid">
+    <div class="qs-side" data-reveal>
       <h2>{heading}</h2>
-      <p class="muted qs-sub">
-        Tell us a little about your space. Prefer to talk? Call or text
+      <ol class="qs-steps">
+        {process.map((p, i) => (
+          <li>
+            <span class:list={['qs-ic', i === 0 && 'on']}><Icon name={icons[i]} /></span>
+            <span><strong>{p.title}</strong><span class="muted">{p.body}</span></span>
+          </li>
+        ))}
+      </ol>
+      <div class="qs-img">
+        <Image src={entry} alt="" widths={[480, 800, 1100]} sizes="(max-width: 900px) 0px, 40vw" />
+      </div>
+    </div>
+
+    <div class="qs-card" data-reveal style="--i:1">
+      <p class="qs-sub">
+        Prefer to talk? Call or text
         <a href={`tel:${company.phoneRaw}`} data-track="call-quote"><Icon name="phone" /> {company.phone}</a>
       </p>
       <QuoteForm service={service} />
@@ -27,24 +41,44 @@ const { service, heading = 'Ready for a cleaner home?' } = Astro.props;
 </section>
 
 <style>
-  .qs { position: relative; isolation: isolate; padding-block: clamp(3rem, 8vw, 6.5rem); overflow: hidden; }
-  .qs :global(.qs-img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; z-index: -1; }
+  .qs { background: radial-gradient(60% 60% at 0% 0%, var(--blush-2) 0%, transparent 70%), var(--blush); }
+  .qs-grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: clamp(2rem, 5vw, 4rem); align-items: stretch; }
+
+  .qs-side { display: flex; flex-direction: column; gap: 1.5rem; }
+  .qs-steps { list-style: none; padding: 0; display: grid; gap: 1rem; }
+  .qs-steps li { display: grid; grid-template-columns: 44px 1fr; gap: 0.9rem; align-items: start; }
+  .qs-steps strong { display: block; font-size: 1.08rem; line-height: 1.25; }
+  .qs-steps .muted { font-size: 0.95rem; line-height: 1.45; }
+  .qs-ic { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--ink); background: var(--paper); color: var(--ink); }
+  .qs-ic.on { background: var(--pink); border-color: var(--pink); }
+  .qs-ic :global(svg) { width: 20px; height: 20px; }
+
+  .qs-img { flex: 1; min-height: 180px; border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow-md); }
+  .qs-img :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; }
+
   .qs-card {
-    width: min(100%, 600px);
-    padding: clamp(1.5rem, 4vw, 2.5rem);
+    padding: clamp(1.4rem, 3.5vw, 2.25rem);
     border-radius: var(--r-card);
-    background: rgb(255 255 255 / 0.96);
-    box-shadow: 0 30px 80px -30px rgb(11 30 69 / 0.45);
+    background: var(--card);
+    box-shadow: 0 30px 80px -40px rgb(11 30 69 / 0.45);
     display: grid;
-    gap: 0.9rem;
+    gap: 1rem;
+    align-content: start;
   }
+  .qs-sub { color: var(--ink-2); font-weight: 550; }
   .qs-sub a { display: inline-flex; align-items: center; gap: 0.3rem; font-weight: 800; color: var(--pink-ink); text-decoration: none; white-space: nowrap; }
   .qs-sub a :global(svg) { width: 16px; height: 16px; }
-  .qs-sub { margin-bottom: 0.6rem; }
 
-  @media (max-width: 700px) {
-    .qs { padding-top: 240px; }
-    .qs :global(.qs-img) { height: 320px; object-position: 80% 50%; }
-    .qs-card { box-shadow: var(--shadow-md); }
+  @media (max-width: 900px) {
+    .qs-grid { grid-template-columns: 1fr; }
+    .qs-img { display: none; }
+    .qs-steps { grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; }
+  }
+  @media (max-width: 560px) {
+    .qs-steps { grid-template-columns: 1fr; gap: 0.8rem; }
+    .qs-steps .muted { display: none; }
+    .qs-steps li { align-items: center; grid-template-columns: 36px 1fr; }
+    .qs-ic { width: 36px; height: 36px; }
+    .qs-ic :global(svg) { width: 17px; height: 17px; }
   }
 </style>

@@ -14,7 +14,7 @@ const { items, heading = 'Questions, answered.', id = 'faq' } = Astro.props;
   <div class="wrap faq-grid">
     <div class="faq-side" data-reveal>
       <h2>{heading}</h2>
-      <p class="muted">Anything else? Call or text <a href={`tel:${company.phoneRaw}`}>{company.phone}</a> or email <a href={`mailto:${company.email}`}>{company.email}</a>.</p>
+      <p class="muted">Anything else? Call or text <a href={`tel:${company.phoneRaw}`}>{company.phone}</a> or email <a href={`mailto:${company.email}`} set:html={company.email.replace('@', '<wbr>@')} />.</p>
     </div>
 
     <div class="faq-list">

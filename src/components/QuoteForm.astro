@@ -129,7 +129,11 @@ const endpoint = import.meta.env.PUBLIC_QUOTE_ENDPOINT ?? '';
   .qf-fallback-head { font-weight: 800; }
   .qf-fallback-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.3rem; }
 
-  @media (max-width: 560px) { .qf-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) {
+    .qf-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+    .qf input, .qf select { min-height: 48px; padding-block: 0.6rem; }
+    .qf-field { gap: 0.3rem; }
+  }
 </style>
 
 <script is:inline>

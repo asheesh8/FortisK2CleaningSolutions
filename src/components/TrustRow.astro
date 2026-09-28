@@ -33,8 +33,12 @@ import { whyUs } from '@/data/business';
     .trust-row li:nth-child(n + 3) { border-top: 1px solid var(--line); }
   }
   @media (max-width: 560px) {
-    .trust-row { grid-template-columns: 1fr; }
-    .trust-row li + li { border-left: 0; border-top: 1px solid var(--line); }
-    .trust-row li { padding: 1.1rem 0.25rem; }
+    .trust-row { grid-template-columns: 1fr 1fr; }
+    .trust-row li { flex-direction: column; gap: 0.5rem; padding: 1rem 0.75rem; }
+    .trust-row li:nth-child(2n) { border-left: 1px solid var(--line); }
+    .trust-row strong { font-size: 0.98rem; margin: 0; }
+    .trust-row .muted { display: none; }
+    .trust-ic { width: 36px; height: 36px; }
+    .trust-ic :global(svg) { width: 18px; height: 18px; }
   }
 </style>

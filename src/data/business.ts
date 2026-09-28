@@ -58,18 +58,21 @@ export const owners = [
     name: 'Kaleigh Dagg',
     role: 'Co-owner',
     initials: 'KD',
+    short: 'Wife and mom of three, building this with her family.',
     bio: 'Wife and mom of three. Kaleigh wanted to build something meaningful for her family while helping others, and started Fortis K² with her sister-in-law and her mother.',
   },
   {
     name: 'McKayla Donovan',
     role: 'Co-owner',
     initials: 'MD',
+    short: 'Mom of two who brings patience and attention to detail.',
     bio: 'Mom of two who dreamed of running her own cleaning company for years. Working with autistic children taught her patience, compassion and attention to detail.',
   },
   {
     name: 'Sarah Dagg',
     role: 'Co-owner',
     initials: 'SD',
+    short: 'Mother, grandmother of nine, and co-owner of Fortis Property Solutions.',
     bio: 'Mother, grandmother of nine, and co-owner of Fortis Property Solutions with her husband Jason. When the chance came to build this with her daughter and McKayla, she jumped in.',
   },
 ];

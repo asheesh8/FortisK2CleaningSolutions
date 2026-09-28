@@ -10,8 +10,8 @@ Originals in `raw-assets/facebook/` (see `SCRAPE-NOTES.md` there).
 
 | Site file | Source | Edits |
 |---|---|---|
-| `src/assets/img/tub-before.jpg`, `tub-after.jpg` | `03-post-122113995189.jpg` (their "Got a tub or shower you dread scrubbing?" post) | Cropped out of the Facebook graphic. The pink arrow overlay the owners added was removed with OpenCV inpainting (arrow pixels only), then both halves cropped to the same window so the drains line up. The tub itself is not altered. |
-| `src/assets/img/hero-sunroom.jpg` | `08-photo-portrait.jpg` | Cropped to the top 1300px (removes shoes on the floor). Used in the homepage hero arch. |
+| `src/assets/img/tub-before.jpg`, `tub-after.jpg` | `03-post-122113995189.jpg` (their "Got a tub or shower you dread scrubbing?" post) | Cropped out of the Facebook graphic. The pink arrow overlay the owners added was removed with OpenCV inpainting (arrow pixels only), then both halves cropped to the same window so the drains line up. The tub itself is not altered. Shown as the draggable before/after in the homepage hero arch. |
+| (not used on site) | `08-photo-portrait.jpg` | Sunroom photo. Was the hero arch; replaced by the tub before/after, which shows the result more clearly. |
 | `src/assets/img/living-room-reset.jpg` | `07-photo-landscape.jpg` | None. |
 | `src/assets/img/supplies.jpg` | `09-supplies.jpg` | None. Used in Recent work. |
 | `src/assets/brand/logo-light.png` | Client-supplied logo (`raw-assets/logo/fortis-logo-original.jpg`, 1284×911 JPEG) | White background removed by edge flood fill; cropped. |

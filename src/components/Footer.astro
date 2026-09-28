@@ -26,7 +26,7 @@ const year = new Date().getFullYear();
       <h2>Company</h2>
       <ul>
         <li><a href="/about/">About us</a></li>
-        <li><a href="/#work">Our work</a></li>
+        <li><a href="/about/#work">Our work</a></li>
         <li><a href="/#faq">FAQ</a></li>
         <li><a href="/quote/">{cta.primary}</a></li>
         <li><a href="/privacy/">Privacy</a></li>
@@ -37,7 +37,7 @@ const year = new Date().getFullYear();
       <h2>Contact</h2>
       <ul class="ftr-contact">
         <li><a href={`tel:${company.phoneRaw}`} data-track="call-footer"><Icon name="phone" />{company.phone}</a></li>
-        <li><a href={`mailto:${company.email}`}><Icon name="envelope-simple" /><span class="ftr-mail">{company.email}</span></a></li>
+        <li><a href={`mailto:${company.email}`}><Icon name="envelope-simple" /><span class="ftr-mail" set:html={company.email.replace('@', '<wbr>@')} /></a></li>
         <li><a href={company.facebook} rel="noopener" target="_blank"><Icon name="facebook-logo" />Message us on Facebook</a></li>
         <li><span><Icon name="map-pin" />{company.county}, Vermont</span></li>
       </ul>
@@ -64,13 +64,13 @@ const year = new Date().getFullYear();
   .ftr-col a:hover { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
   .ftr-contact a, .ftr-contact span { display: inline-flex; align-items: center; gap: 0.55rem; }
   .ftr-contact :global(svg) { width: 18px; height: 18px; color: var(--pink); flex: none; }
-  .ftr-mail { word-break: break-all; }
+  .ftr-mail { overflow-wrap: normal; }
 
   .ftr-word {
     margin-top: clamp(2.5rem, 6vw, 4rem);
     font-weight: 900;
     font-variation-settings: 'wdth' 62;
-    font-size: clamp(5rem, 22vw, 19rem);
+    font-size: clamp(5rem, 15vw, 13rem);
     line-height: 0.8;
     letter-spacing: -0.02em;
     text-transform: uppercase;
@@ -84,5 +84,14 @@ const year = new Date().getFullYear();
   .ftr-base a { color: #d9def0; text-decoration: underline; text-underline-offset: 3px; }
 
   @media (max-width: 960px) { .ftr-top { grid-template-columns: 1fr 1fr; } .ftr-brand { grid-column: 1 / -1; } }
-  @media (max-width: 560px) { .ftr-top { grid-template-columns: 1fr; } .ftr { padding-bottom: 72px; } }
+  @media (max-width: 560px) {
+    .ftr { padding-top: 2.75rem; padding-bottom: 76px; }
+    .ftr-top { grid-template-columns: 1fr 1fr; gap: 2rem 1.25rem; }
+    .ftr-top > :last-child { grid-column: 1 / -1; }
+    .ftr-brand img { width: 190px; margin-bottom: 0.9rem; }
+    .ftr-brand p { margin-bottom: 1.1rem; }
+    .ftr-col ul { gap: 0.5rem; }
+    .ftr-word { font-size: 27vw; margin-top: 2rem; }
+    .ftr-base { flex-direction: column; gap: 0.35rem; padding-block: 1.1rem 1.25rem; }
+  }
 </style>

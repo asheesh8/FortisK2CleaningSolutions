@@ -2,7 +2,6 @@
 import { Image } from 'astro:assets';
 import Base from '@/layouts/Base.astro';
 import Icon from '@/components/Icon.astro';
-import Process from '@/components/Process.astro';
 import ServiceBento from '@/components/ServiceBento.astro';
 import Faq from '@/components/Faq.astro';
 import QuoteSection from '@/components/QuoteSection.astro';
@@ -70,7 +69,6 @@ const serviceSchema = {
     </div>
   </section>
 
-  <Process />
   <ServiceBento heading="More ways we can help." exclude={service.slug} />
   <Faq items={pageFaqs} />
   <QuoteSection service={service.slug} heading={`Get a quote for ${service.short.toLowerCase()}.`} />
