@@ -4,6 +4,8 @@ Website for Fortis K² Cleaning Solutions, a family-owned, fully insured house c
 
 Static Astro site. No database, no server runtime.
 
+**Live:** https://fortisk2cleaningsolutions.vercel.app · **Stack:** Astro 5 static site, Node 20.3+, hosted on Vercel (`netlify.toml` also kept). The only environment variable is `PUBLIC_QUOTE_ENDPOINT` (public, build-time) — see *Quote form* below.
+
 ## Quick start
 
 ```bash
